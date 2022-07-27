@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1087833281500",
+    "project_id": "stor-compyoter",
+    "storage_bucket": "stor-compyoter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087833281500:android:c5d2f6889bcea02e657519",
+        "android_client_info": {
+          "package_name": "com.example.computer_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1087833281500-n53nh21b5dse0oco0rr1drocprrv0vab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWNci_E6E8jJReUtwK2c-L9-zZL2mo0ME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1087833281500-n53nh21b5dse0oco0rr1drocprrv0vab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
