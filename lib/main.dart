@@ -1,4 +1,5 @@
 import 'package:computer_store/Notifiers/providers.dart';
+import 'package:computer_store/screen/login_screen.dart';
 import 'package:computer_store/screen/welcom_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,10 +24,15 @@ class MyApp extends StatelessWidget {
         builder: (context, orientation, deviceType) {
           return MaterialApp(
             title: 'Computer Store',
+            debugShowCheckedModeBanner: false,
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            initialRoute: WelcomScreen.routeName,
+            initialRoute: LoginScreen.routeName,
+            routes: {
+              WelcomScreen.routeName: (context) => const WelcomScreen(),
+              LoginScreen.routeName: (context) => const LoginScreen(),
+            },
           );
         },
       ),
