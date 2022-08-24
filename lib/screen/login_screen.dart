@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:computer_store/Notifiers/firebase_serves.dart';
+import 'package:computer_store/Notifiers/login_state.dart';
 import 'package:computer_store/screen/welcom_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,21 +17,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            InkWell(
+      body: SafeArea(
+        child: Column(children: [
+          Center(
+            child: InkWell(
               onTap: () async {
-                final res =
-                    await Provider.of<FirebaseService>(context, listen: false)
-                        .signInwithGoogle();
-                if (res != null) {
-                  Navigator.of(context)
-                      .pushReplacementNamed(WelcomScreen.routeName);
-                } else {
-                  log('error');
-                }
+                await Provider.of<LoginState>(context, listen: false)
+                    .singInWithGoogle();
               },
               child: Container(
                 height: 10.h,
@@ -42,8 +34,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 child: const Icon(Icons.login, color: Colors.white, size: 50),
               ),
-            )
-          ]),
+            ),
+          )
+        ]),
+      ),
     );
   }
 }
