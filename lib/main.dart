@@ -1,4 +1,5 @@
 import 'package:computer_store/Notifiers/providers.dart';
+import 'package:computer_store/screen/add_account_screen.dart';
 import 'package:computer_store/screen/login_screen.dart';
 import 'package:computer_store/screen/welcom_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
             routes: {
               WelcomScreen.routeName: (context) => const WelcomScreen(),
               LoginScreen.routeName: (context) => const LoginScreen(),
+              AddAccount.routeName: (context) => const AddAccount(),
             },
           );
         },

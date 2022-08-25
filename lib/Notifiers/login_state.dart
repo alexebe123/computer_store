@@ -9,7 +9,7 @@ class LoginState extends ChangeNotifier {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   Future<void> lode() async {}
 
-  Future singInWithGoogle() async {
+  Future<User?> singInWithGoogle() async {
     GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount!.authentication;
@@ -20,7 +20,8 @@ class LoginState extends ChangeNotifier {
     UserCredential userCredential =
         await _auth.signInWithCredential(authCredential);
     final User? user = userCredential.user;
-    log(user!.email.toString());
     return user;
   }
+
+  
 }
