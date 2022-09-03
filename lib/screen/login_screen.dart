@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
           InkWell(
             onTap: () async {
               final res = await Provider.of<LoginState>(context, listen: false)
-                  .singInWithGoogle();
+                  .lode();
               if (res != null) {
                 Navigator.of(context)
                     .pushReplacementNamed(AddAccount.routeName);
