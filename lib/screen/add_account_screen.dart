@@ -1,8 +1,13 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:computer_store/Models/profile_model.dart';
 import 'package:computer_store/Notifiers/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddAccount extends StatefulWidget {
   const AddAccount({Key? key}) : super(key: key);
@@ -18,6 +23,7 @@ class _AddAccountState extends State<AddAccount> {
   String genderError = "";
   String phoneError = "";
   ProfileModel profileModel = ProfileModel.empty();
+  ImagePicker picker = ImagePicker();
 
   String _getPathImage(String gender) {
     switch (gender) {
@@ -285,15 +291,48 @@ class _AddAccountState extends State<AddAccount> {
                 height: 2.h,
               ),
               // fild for image
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
-                decoration: BoxDecoration(
-                  color: Colors.amber[200],
-                  borderRadius: BorderRadius.circular(11),
-                ),
-                child: Text(
-                  'حدد صورتك الشخصية',
-                  style: TextStyle(fontSize: 15.sp),
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return StatefulBuilder(
+                            builder: (BuildContext context, setState) {
+                          return AlertDialog(
+                            scrollable: true,
+                            content: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 2.w),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(Icons.camera_alt),
+                                        iconSize: 50),
+                                    SizedBox(
+                                      width: 3.w,
+                                    ),
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                            Icons.add_photo_alternate_outlined),
+                                        iconSize: 50),
+                                  ]),
+                            ),
+                          );
+                        });
+                      });
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
+                  decoration: BoxDecoration(
+                    color: Colors.amber[200],
+                    borderRadius: BorderRadius.circular(11),
+                  ),
+                  child: Text(
+                    'حدد صورتك الشخصية',
+                    style: TextStyle(fontSize: 15.sp),
+                  ),
                 ),
               ),
 
@@ -335,5 +374,24 @@ class _AddAccountState extends State<AddAccount> {
     }
 
     return profileModel.age;
+  }
+
+  Future<File?> getImage({required ImageSource source}) async {
+    final XFile? selectedImage = await picker.pickImage(source: source);
+    File? finalResult;
+    final compresedResult = await FlutterImageCompress.compressWithFile(
+      selectedImage!.path,
+      minWidth: 320,
+      minHeight: 240,
+      quality: 80,
+    );
+    File fileImage = File(selectedImage.path);
+    if (compresedResult != null) {
+      final file = fileImage;
+      file.writeAsBytesSync(compresedResult);
+      finalResult = file;
+    }
+    log(finalResult.toString());
+    return finalResult;
   }
 }

@@ -12,7 +12,6 @@ class LoginState extends ChangeNotifier {
   Future lode() async {
     _apiService = ApiServices.instance;
     final res = await _apiService.singInWithGoogle();
-    await _apiService.getAccount();
     return res;
   }
 

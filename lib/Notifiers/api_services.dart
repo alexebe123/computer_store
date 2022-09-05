@@ -23,14 +23,7 @@ class ApiServices extends ChangeNotifier {
     return _instance!;
   }
 
-  Future getAccount() async {
-    final res = await _firestor
-        .collection(AppConstant.coolectionUsers)
-        .doc(user!.uid)
-        .get();
-
-    list.add(ProfileModel.fromJson(res.data()));
-  }
+  Future getAccount() async {}
 
   Future addAccount(ProfileModel profileModel) async {
     final res = await _firestor
