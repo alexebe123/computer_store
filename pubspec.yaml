@@ -91,6 +91,17 @@ flutter:
           weight: 600
         - asset: assets/fonts/Teko-light.ttf
         - asset: assets/fonts/Teko-Medium.ttf
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-bold.ttf
+          weight: 600
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-Regular.ttf
+        - asset: assets/fonts/Nunito-Bold.ttf
+          weight: 600
+       
           
   #   - family: Trajan Pro
   #     fonts:

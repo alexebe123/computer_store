@@ -181,7 +181,7 @@ class _AddAccountState extends State<AddAccount> {
               // fild for age
               InkWell(
                 onTap: () {
-                  _selectDate(context);
+                //  _selectDate(context);
                 },
                 child: Container(
                   width: 50.w,
@@ -207,135 +207,7 @@ class _AddAccountState extends State<AddAccount> {
                 height: 2.h,
               ),
               // fild for gender
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(11),
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 1,
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Image.asset(
-                      _getPathImage(profileModel.gender),
-                      height: 20.h,
-                      width: 20.w,
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 2.w, vertical: 2.w),
-                          child: Row(children: [
-                            // radio box
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  profileModel.gender = "woman";
-                                });
-                              },
-                              child: Container(
-                                height: 3.w,
-                                width: 3.w,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: (profileModel.gender == "woman")
-                                      ? Colors.black
-                                      : Colors.white,
-                                  border:
-                                      Border.all(color: Colors.black, width: 1),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "أمراة",
-                              style: TextStyle(fontSize: 13.sp),
-                            ),
-                            SizedBox(
-                              width: 5.w,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  profileModel.gender = "man";
-                                });
-                              },
-                              child: Container(
-                                height: 3.w,
-                                width: 3.w,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: (profileModel.gender == "man")
-                                      ? Colors.black
-                                      : Colors.white,
-                                  border:
-                                      Border.all(color: Colors.black, width: 1),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "رجل",
-                              style: TextStyle(fontSize: 13.sp),
-                            ),
-                          ]),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 2.h,
-              ),
-              // fild for image
-              GestureDetector(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return StatefulBuilder(
-                            builder: (BuildContext context, setState) {
-                          return AlertDialog(
-                            scrollable: true,
-                            content: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 2.w),
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(Icons.camera_alt),
-                                        iconSize: 50),
-                                    SizedBox(
-                                      width: 3.w,
-                                    ),
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                            Icons.add_photo_alternate_outlined),
-                                        iconSize: 50),
-                                  ]),
-                            ),
-                          );
-                        });
-                      });
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
-                  decoration: BoxDecoration(
-                    color: Colors.amber[200],
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                  child: Text(
-                    'حدد صورتك الشخصية',
-                    style: TextStyle(fontSize: 15.sp),
-                  ),
-                ),
-              ),
-
+           
               GestureDetector(
                 onTap: () {
                   Provider.of<LoginState>(context, listen: false)
@@ -360,38 +232,4 @@ class _AddAccountState extends State<AddAccount> {
     );
   }
 
-  Future<DateTime> _selectDate(BuildContext context) async {
-    final selected = await showDatePicker(
-      context: context,
-      initialDate: DateTime(2000),
-      firstDate: DateTime(1970),
-      lastDate: DateTime(2022),
-    );
-    if (selected != null && selected != profileModel.age) {
-      setState(() {
-        profileModel.age = selected;
-      });
-    }
-
-    return profileModel.age;
-  }
-
-  Future<File?> getImage({required ImageSource source}) async {
-    final XFile? selectedImage = await picker.pickImage(source: source);
-    File? finalResult;
-    final compresedResult = await FlutterImageCompress.compressWithFile(
-      selectedImage!.path,
-      minWidth: 320,
-      minHeight: 240,
-      quality: 80,
-    );
-    File fileImage = File(selectedImage.path);
-    if (compresedResult != null) {
-      final file = fileImage;
-      file.writeAsBytesSync(compresedResult);
-      finalResult = file;
-    }
-    log(finalResult.toString());
-    return finalResult;
-  }
 }

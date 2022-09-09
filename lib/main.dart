@@ -1,5 +1,4 @@
 import 'package:computer_store/Notifiers/providers.dart';
-import 'package:computer_store/screen/add_account_screen.dart';
 import 'package:computer_store/screen/first_screen.dart';
 import 'package:computer_store/screen/login_screen.dart';
 import 'package:computer_store/screen/welcom_screen.dart';
@@ -30,11 +29,10 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            initialRoute: FirstScreen.routeName,
+            initialRoute: LoginScreen.routeName,
             routes: {
               WelcomScreen.routeName: (context) => const WelcomScreen(),
               LoginScreen.routeName: (context) => const LoginScreen(),
-              AddAccount.routeName: (context) => const AddAccount(),
               FirstScreen.routeName: (context) => const FirstScreen(),
             },
           );
