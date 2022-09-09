@@ -9,13 +9,14 @@ class ProfileModel {
 
   ProfileModel.empty();
 
-  ProfileModel(
-      {required this.age,
-      required this.gender,
-      required this.imageUrl,
-      required this.name,
-      required this.phone,
-      required this.role});
+  ProfileModel({
+    required this.age,
+    required this.gender,
+    required this.imageUrl,
+    required this.name,
+    required this.phone,
+    required this.role,
+  });
 
   ProfileModel.fromJson(Map<String, dynamic>? json) {
     id = json!['\$id'];
