@@ -1,6 +1,8 @@
 import 'package:computer_store/Notifiers/providers.dart';
+import 'package:computer_store/screen/add_account_screen.dart';
 import 'package:computer_store/screen/first_screen.dart';
 import 'package:computer_store/screen/login_screen.dart';
+import 'package:computer_store/screen/main_screen.dart';
 import 'package:computer_store/screen/singup_screen.dart';
 import 'package:computer_store/screen/welcom_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -36,6 +38,8 @@ class MyApp extends StatelessWidget {
               LoginScreen.routeName: (context) => const LoginScreen(),
               FirstScreen.routeName: (context) => const FirstScreen(),
               SingUpScreen.routeName: (context) => const SingUpScreen(),
+              AddAccount.routeName: (context) => const AddAccount(),
+              MainScreen.routeName: (context) => const MainScreen(),
             },
           );
         },

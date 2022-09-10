@@ -25,16 +25,7 @@ class _AddAccountState extends State<AddAccount> {
   ProfileModel profileModel = ProfileModel.empty();
   ImagePicker picker = ImagePicker();
 
-  String _getPathImage(String gender) {
-    switch (gender) {
-      case "man":
-        return "assets/images/man.png";
-      case "woman":
-        return "assets/images/woman.png";
-      default:
-        return "assets/images/anonymous-icon.jpg";
-    }
-  }
+  
 
   @override
   Widget build(BuildContext context) {

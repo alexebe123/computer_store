@@ -1,5 +1,9 @@
 import 'package:computer_store/Models/profile_model.dart';
+import 'package:computer_store/Notifiers/api_services.dart';
+import 'package:computer_store/screen/login_screen.dart';
+import 'package:computer_store/screen/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class SingUpScreen extends StatefulWidget {
@@ -15,6 +19,28 @@ class _SingUpScreenState extends State<SingUpScreen> {
   String nameError = "";
   String passwordError = "";
   ProfileModel profileModel = ProfileModel.empty();
+
+  bool _validateInfoOrder(void Function(void Function()) setState) {
+    bool result = true;
+    if (profileModel.name == "") {
+      nameError = "يجب ادخال السبب";
+      result = false;
+    }
+    if (profileModel.email == "") {
+      emailError = "يجب ادخال السبب";
+      result = false;
+    }
+    if (profileModel.password == "") {
+      passwordError = "يجب ادخال السبب";
+      result = false;
+    }
+    if (profileModel.phone == "") {
+      phoneError = "يجب ادخال السبب";
+      result = false;
+    }
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +49,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
           child: SingleChildScrollView(
             child: Column(children: [
               Text(
-                "LogIn".toUpperCase(),
+                "SIGN UP",
                 style: TextStyle(
                   fontFamily: "Teko",
                   fontSize: 40.sp,
@@ -203,20 +229,33 @@ class _SingUpScreenState extends State<SingUpScreen> {
               SizedBox(
                 height: 3.h,
               ),
-              Container(
-                width: 80.w,
-                height: 8.h,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Color(0XFF222222)),
-                child: Center(
-                  child: Text(
-                    "SIGN UP",
-                    style: TextStyle(
-                      fontFamily: "Nunito",
-                      fontSize: 14.sp,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+              InkWell(
+                onTap: () async {
+                  if (_validateInfoOrder(setState)) {
+                    final res =
+                        await Provider.of<ApiServices>(context, listen: false)
+                            .addAccount(profileModel);
+                    if (res.id != "") {
+                      Navigator.pushReplacementNamed(
+                          context, MainScreen.routeName);
+                    }
+                  }
+                },
+                child: Container(
+                  width: 80.w,
+                  height: 8.h,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color(0XFF222222)),
+                  child: Center(
+                    child: Text(
+                      "SIGN UP",
+                      style: TextStyle(
+                        fontFamily: "Nunito",
+                        fontSize: 14.sp,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -238,12 +277,17 @@ class _SingUpScreenState extends State<SingUpScreen> {
                   SizedBox(
                     width: 3.w,
                   ),
-                  Text(
-                    "Login",
-                    style: TextStyle(
-                        fontFamily: "Nunito",
-                        fontSize: 11.sp,
-                        color: Color(0XFFD87234)),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, LoginScreen.routeName);
+                    },
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                          fontFamily: "Nunito",
+                          fontSize: 11.sp,
+                          color: Color(0XFFD87234)),
+                    ),
                   ),
                 ],
               ),
@@ -290,5 +334,4 @@ class _SingUpScreenState extends State<SingUpScreen> {
       ),
     );
   }
-
 }

@@ -10,7 +10,8 @@ class ApiServices extends ChangeNotifier {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  FirebaseFirestore _firestor = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestor = FirebaseFirestore.instance;
+
   User? user;
   List<ProfileModel> list = [];
 
@@ -25,14 +26,37 @@ class ApiServices extends ChangeNotifier {
 
   Future getAccount() async {}
 
-  Future addAccount(ProfileModel profileModel) async {
+  Future<DocumentReference<Map<String, dynamic>>> addAccount(
+      ProfileModel profileModel) async {
+    await _auth.createUserWithEmailAndPassword(
+        email: profileModel.email, password: profileModel.password);
     final res = await _firestor
         .collection(AppConstant.coolectionUsers)
-        .doc(user!.uid)
-        .set(profileModel.toJson());
+        .add(profileModel.toJson());
+    return res;
+  }
+
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> logIn(
+      ProfileModel profileModel) async {
+    final res = await _firestor
+        .collection('Users')
+        .where('email', isEqualTo: profileModel.email)
+        .get();
+    return res.docs;
+  }
+
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+      logInWithEmailAndPassword(ProfileModel profileModel) async {
+    final res = await _firestor
+        .collection('Users')
+        .where('email', isEqualTo: profileModel.email)
+        .where('password', isEqualTo: profileModel.password)
+        .get();
+    return res.docs;
   }
 
   Future<User?> singInWithGoogle() async {
+    ProfileModel profileModel = ProfileModel.empty();
     GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount!.authentication;
@@ -43,6 +67,14 @@ class ApiServices extends ChangeNotifier {
     UserCredential userCredential =
         await _auth.signInWithCredential(authCredential);
     user = userCredential.user;
+    profileModel.email = user!.email!;
+    final res = await logIn(profileModel);
+    if (res.isEmpty) {
+      profileModel.name = user!.displayName!;
+      await _firestor
+          .collection(AppConstant.coolectionUsers)
+          .add(profileModel.toJson());
+    }
     return user;
   }
 }

@@ -1,5 +1,10 @@
 import 'package:computer_store/Models/profile_model.dart';
+import 'package:computer_store/Notifiers/api_services.dart';
+import 'package:computer_store/Notifiers/login_state.dart';
+import 'package:computer_store/screen/main_screen.dart';
+import 'package:computer_store/screen/singup_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,9 +15,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String phoneError = "";
   String emailError = "";
-  String nameError = "";
   String passwordError = "";
   ProfileModel profileModel = ProfileModel.empty();
   @override
@@ -47,46 +50,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: SizedBox(
                   width: 80.w,
                   child: TextField(
-                      keyboardType: TextInputType.name,
-                      onChanged: (value) {
-                        if (nameError != "") {
-                          setState(() {
-                            nameError = "";
-                          });
-                        } else {
-                          profileModel.name = value;
-                        }
-                      },
-                      decoration: InputDecoration(
-                        hintText: "Name",
-                        errorText: (nameError == "") ? null : nameError,
-                        errorStyle: TextStyle(
-                            fontFamily: "Nunito",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10.sp),
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 1.h, horizontal: 5.w),
-                        hintStyle: TextStyle(
-                            fontFamily: "IBM Plex Sans Arabic",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.sp),
-                        floatingLabelStyle: TextStyle(
-                            fontFamily: "IBM Plex Sans Arabic",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.sp),
-                        errorBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red, width: 2),
-                        ),
-                      )),
-                ),
-              ),
-              SizedBox(
-                height: 1.h,
-              ),
-              Center(
-                child: SizedBox(
-                  width: 80.w,
-                  child: TextField(
                       keyboardType: TextInputType.emailAddress,
                       onChanged: (value) {
                         if (emailError != "") {
@@ -100,46 +63,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: InputDecoration(
                         hintText: "Email",
                         errorText: (emailError == "") ? null : emailError,
-                        errorStyle: TextStyle(
-                            fontFamily: "Nunito",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10.sp),
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 1.h, horizontal: 5.w),
-                        hintStyle: TextStyle(
-                            fontFamily: "IBM Plex Sans Arabic",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.sp),
-                        floatingLabelStyle: TextStyle(
-                            fontFamily: "IBM Plex Sans Arabic",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.sp),
-                        errorBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red, width: 2),
-                        ),
-                      )),
-                ),
-              ),
-              SizedBox(
-                height: 1.h,
-              ),
-              Center(
-                child: SizedBox(
-                  width: 80.w,
-                  child: TextField(
-                      keyboardType: TextInputType.phone,
-                      onChanged: (value) {
-                        if (phoneError != "") {
-                          setState(() {
-                            phoneError = "";
-                          });
-                        } else {
-                          profileModel.phone = value;
-                        }
-                      },
-                      decoration: InputDecoration(
-                        hintText: "Phone",
-                        errorText: (phoneError == "") ? null : phoneError,
                         errorStyle: TextStyle(
                             fontFamily: "Nunito",
                             fontWeight: FontWeight.bold,
@@ -201,22 +124,33 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(
-                height: 3.h,
+                height: 6.h,
               ),
-              Container(
-                width: 80.w,
-                height: 8.h,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Color(0XFF222222)),
-                child: Center(
-                  child: Text(
-                    "SIGN UP",
-                    style: TextStyle(
-                      fontFamily: "Nunito",
-                      fontSize: 14.sp,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () async {
+                  final res =
+                      await Provider.of<ApiServices>(context, listen: false)
+                          .logInWithEmailAndPassword(profileModel);
+                  if (res.isNotEmpty) {
+                    Navigator.pushReplacementNamed(
+                        context, MainScreen.routeName);
+                  }
+                },
+                child: Container(
+                  width: 80.w,
+                  height: 8.h,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0XFF222222)),
+                  child: Center(
+                    child: Text(
+                      "LOG IN",
+                      style: TextStyle(
+                        fontFamily: "Nunito",
+                        fontSize: 14.sp,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -229,61 +163,77 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "Already have an account? ",
+                    "Don't have an account? ",
                     style: TextStyle(
-                      fontFamily: "Nunito",
-                      fontSize: 11.sp,
-                    ),
+                        fontFamily: "Nunito",
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     width: 3.w,
                   ),
-                  Text(
-                    "Login",
-                    style: TextStyle(
-                        fontFamily: "Nunito",
-                        fontSize: 11.sp,
-                        color: Color(0XFFD87234)),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, SingUpScreen.routeName);
+                    },
+                    child: Text(
+                      "sign up",
+                      style: TextStyle(
+                          fontFamily: "Nunito",
+                          fontSize: 11.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0XFFD87234)),
+                    ),
                   ),
                 ],
               ),
-
-              /* SizedBox(
-                child: Image.asset(
-                  'assets/images/rafiki.png',
-                  width: 90.w,
-                  height: 75.h,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Expanded(
+                    child: Divider(
+                      height: 50,
+                      thickness: 3,
+                      indent: 0,
+                      endIndent: 0,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 2.w,
+                  ),
+                  Text(
+                    "Sign In with",
+                    style: TextStyle(
+                        fontFamily: "Nunito",
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const Expanded(
+                    child: Divider(
+                      height: 50,
+                      thickness: 3,
+                      indent: 10,
+                      endIndent: 0,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 1.h,
               ),
               InkWell(
-                onTap: () async {
-                  final res = await Provider.of<LoginState>(context, listen: false)
-                      .lode();
-                  if (res != null) {
-                  /*  Navigator.of(context)
-                        .pushReplacementNamed(AddAccount.routeName);*/
-                  }
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      height: 10.h,
-                      width: 30.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Image.asset('assets/images/google.png'),
-                    ),
-                    SizedBox(
-                      child: Text(
-                        'SingIn With Google',
-                        style: TextStyle(fontSize: 15.sp),
-                      ),
-                    ),
-                  ],
-                ),
-              )*/
+                  onTap: () async {
+                    final res =
+                        await Provider.of<LoginState>(context, listen: false)
+                            .lode();
+                    if (res != null) {
+                      Navigator.of(context)
+                          .pushReplacementNamed(MainScreen.routeName);
+                    }
+                  },
+                  child: Image.asset('assets/images/google.png')),
             ]),
           ),
         ),

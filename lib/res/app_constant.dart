@@ -1,3 +1,3 @@
 class AppConstant {
-  static const String coolectionUsers = "user";
+  static const String coolectionUsers = "Users";
 }
