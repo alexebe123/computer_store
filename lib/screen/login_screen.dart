@@ -227,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onTap: () async {
                     final res =
                         await Provider.of<LoginState>(context, listen: false)
-                            .lode();
+                            .load();
                     if (res != null) {
                       Navigator.of(context)
                           .pushReplacementNamed(MainScreen.routeName);

@@ -8,7 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class ApiServices extends ChangeNotifier {
   static ApiServices? _instance;
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseFirestore _firestor = FirebaseFirestore.instance;
 
@@ -28,7 +28,7 @@ class ApiServices extends ChangeNotifier {
 
   Future<DocumentReference<Map<String, dynamic>>> addAccount(
       ProfileModel profileModel) async {
-    await _auth.createUserWithEmailAndPassword(
+    await auth.createUserWithEmailAndPassword(
         email: profileModel.email, password: profileModel.password);
     final res = await _firestor
         .collection(AppConstant.coolectionUsers)
@@ -65,7 +65,7 @@ class ApiServices extends ChangeNotifier {
       idToken: googleSignInAuthentication.idToken,
     );
     UserCredential userCredential =
-        await _auth.signInWithCredential(authCredential);
+        await auth.signInWithCredential(authCredential);
     user = userCredential.user;
     profileModel.email = user!.email!;
     final res = await logIn(profileModel);
@@ -76,5 +76,9 @@ class ApiServices extends ChangeNotifier {
           .add(profileModel.toJson());
     }
     return user;
+  }
+
+  Future<void> signOut() async {
+    await auth.signOut();
   }
 }

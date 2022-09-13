@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            initialRoute: LoginScreen.routeName,
+            initialRoute: FirstScreen.routeName,
             routes: {
               WelcomScreen.routeName: (context) => const WelcomScreen(),
               LoginScreen.routeName: (context) => const LoginScreen(),

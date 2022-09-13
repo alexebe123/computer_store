@@ -9,7 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class LoginState extends ChangeNotifier {
   late ApiServices _apiService;
 
-  Future lode() async {
+  Future load() async {
     _apiService = ApiServices.instance;
     final res = await _apiService.singInWithGoogle();
     return res;
