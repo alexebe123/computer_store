@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:computer_store/Models/product_model.dart';
 import 'package:computer_store/Models/profile_model.dart';
 import 'package:computer_store/res/app_constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,7 +34,7 @@ class ApiServices extends ChangeNotifier {
     await auth.createUserWithEmailAndPassword(
         email: profileModel.email, password: profileModel.password);
     final res = await _firestor
-        .collection(AppConstant.coolectionUsers)
+        .collection(AppConstant.coolectionNameUsers)
         .add(profileModel.toJson());
     return res;
   }
@@ -55,6 +58,22 @@ class ApiServices extends ChangeNotifier {
     return res.docs;
   }
 
+  Future getProductModel() async {
+    final res =
+        await _firestor.collection(AppConstant.coolectionNameProduct).get();
+    return res.docs;
+  }
+
+  Future createProductModel(ProductModel productModel) async {
+    try {
+      await _firestor
+          .collection(AppConstant.coolectionNameProduct)
+          .add(productModel.toJson());
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
   Future<User?> singInWithGoogle() async {
     ProfileModel profileModel = ProfileModel.empty();
     GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
@@ -72,7 +91,7 @@ class ApiServices extends ChangeNotifier {
     if (res.isEmpty) {
       profileModel.name = user!.displayName!;
       await _firestor
-          .collection(AppConstant.coolectionUsers)
+          .collection(AppConstant.coolectionNameUsers)
           .add(profileModel.toJson());
     }
     return user;

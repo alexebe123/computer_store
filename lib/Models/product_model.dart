@@ -1,5 +1,6 @@
 class ProductModel {
   String id = "";
+  String brandName = "";
   String name = "";
   double price = 0;
   List<LaptopProductModel> listLaptopProduct = [];
@@ -7,17 +8,37 @@ class ProductModel {
   ProductModel.empty();
 
   ProductModel.fromJson(Map<String, dynamic> json) {
-    id = json['\$id'];
-    name = json['name'];
-    price = json['price'];
-    listLaptopProduct = json['listLaptopProduct'];
+    try {
+      id = json['\$id'];
+    } catch (e) {}
+    try {
+      name = json['name'];
+    } catch (e) {}
+    try {
+      price = json['price'];
+    } catch (e) {}
+    try {
+      listLaptopProduct = json['listLaptopProduct'];
+    } catch (e) {}
+    try {
+      brandName = json['brandName'];
+    } catch (e) {}
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['os'] = name;
-    data['price'] = price;
-    data['listLaptopProduct'] = listLaptopProduct;
+    try {
+      data['os'] = name;
+    } catch (e) {}
+    try {
+      data['price'] = price;
+    } catch (e) {}
+    try {
+      data['listLaptopProduct'] = listLaptopProduct;
+    } catch (e) {}
+    try {
+      data['brandName'] = brandName;
+    } catch (e) {}
     return data;
   }
 }
@@ -35,25 +56,55 @@ class LaptopProductModel {
   LaptopProductModel.empty();
 
   LaptopProductModel.fromJson(Map<String, dynamic> json) {
-    id = json['\$id'];
-    model = json['model'];
-    processor = json['processor'];
-    screen = json['screen'];
-    memory = json['memory'];
-    diskSpace = json['diskSpace'];
-    graphic = json['graphic'];
-    os = json['os'];
+    try {
+      id = json['\$id'];
+    } catch (e) {}
+    try {
+      model = json['model'];
+    } catch (e) {}
+    try {
+      processor = json['processor'];
+    } catch (e) {}
+    try {
+      screen = json['screen'];
+    } catch (e) {}
+    try {
+      memory = json['memory'];
+    } catch (e) {}
+    try {
+      diskSpace = json['diskSpace'];
+    } catch (e) {}
+    try {
+      graphic = json['graphic'];
+    } catch (e) {}
+    try {
+      os = json['os'];
+    } catch (e) {}
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['model'] = model;
-    data['processor'] = processor;
-    data['screen'] = screen;
-    data['memory'] = memory;
-    data['diskSpace'] = diskSpace;
-    data['graphic'] = graphic;
-    data['os'] = os;
+    try {
+      data['model'] = model;
+    } catch (e) {}
+    try {
+      data['processor'] = processor;
+    } catch (e) {}
+    try {
+      data['screen'] = screen;
+    } catch (e) {}
+    try {
+      data['memory'] = memory;
+    } catch (e) {}
+    try {
+      data['diskSpace'] = diskSpace;
+    } catch (e) {}
+    try {
+      data['graphic'] = graphic;
+    } catch (e) {}
+    try {
+      data['os'] = os;
+    } catch (e) {}
     return data;
   }
 }

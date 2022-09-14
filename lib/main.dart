@@ -4,7 +4,6 @@ import 'package:computer_store/screen/first_screen.dart';
 import 'package:computer_store/screen/login_screen.dart';
 import 'package:computer_store/screen/main_screen.dart';
 import 'package:computer_store/screen/singup_screen.dart';
-import 'package:computer_store/screen/welcom_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +33,6 @@ class MyApp extends StatelessWidget {
             ),
             initialRoute: FirstScreen.routeName,
             routes: {
-              WelcomScreen.routeName: (context) => const WelcomScreen(),
               LoginScreen.routeName: (context) => const LoginScreen(),
               FirstScreen.routeName: (context) => const FirstScreen(),
               SingUpScreen.routeName: (context) => const SingUpScreen(),

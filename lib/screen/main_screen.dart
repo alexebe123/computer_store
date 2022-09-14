@@ -1,5 +1,6 @@
 import 'package:computer_store/Notifiers/api_services.dart';
 import 'package:computer_store/screen/first_screen.dart';
+import 'package:computer_store/widget/main/section/product/product_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -12,6 +13,9 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  int currentIndex = 1;
+  final PageController _pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,86 +46,76 @@ class _MainScreenState extends State<MainScreen> {
               width: 2.w,
             ),
           ]),
-      body: SizedBox(
-        width: 100.w,
-        height: 100.h,
-        child: Column(
+      body: SingleChildScrollView(
+        child: Stack(
           children: [
-            SizedBox(
-              height: 1.h,
-            ),
-            Container(
-              width: 70.w,
-              height: 50.h,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: const Color(0XFF323232)),
-              child: Center(
-                child: Column(children: [
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Image.asset('assets/images/Asus_ROG.png'),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Text(
-                    "Asus ROG Strix G513QE",
-                    style: TextStyle(
-                      fontFamily: "Inter",
-                      fontSize: 16.sp,
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Text(
-                    "Laptop",
-                    style: TextStyle(
-                      fontFamily: "Inter",
-                      fontSize: 10.sp,
-                      color: const Color(0XFF8A8A8A),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Text(
-                    "\$1,599.00",
-                    style: TextStyle(
-                      fontFamily: "Inter",
-                      fontSize: 14.sp,
-                      color: const Color(0XFFDA00FE),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.add_circle,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 4.w,
-                      ),
-                      Text(
-                        "Añadir al carrito",
-                        style: TextStyle(
-                          fontFamily: "Inter",
-                          fontSize: 12.sp,
-                          color: Colors.white,
-                        ),
-                      ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 1.h,
+                ),
+                const ProductItemWidget(),
+                SizedBox(
+                  height: 73.h,
+                  child: PageView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    controller: _pageController,
+                    onPageChanged: (index) {
+                      setState(() {
+                        currentIndex = index;
+                      });
+                    },
+                    children: const [
+                      // main screen
                     ],
                   ),
-                ]),
-              ),
+                ),
+              ],
             ),
+            Builder(builder: (context) {
+              return Positioned(
+                bottom: 0,
+                left: 0,
+                child: SizedBox(
+                  width: 100.w,
+                  height: 80,
+                  child: Stack(
+                    children: [
+                      CustomPaint(
+                        size: Size(100.w, 80),
+                      ),
+                      SizedBox(
+                        width: 100.w,
+                        height: 80,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            // home icon
+                            IconButton(
+                              icon: Icon(
+                                Icons.favorite,
+                                color: Colors.black,
+                              ),
+                              onPressed: () {},
+                              splashColor: Colors.white,
+                            ),
+                            // orders icon
+                            IconButton(
+                                icon: Icon(
+                                  Icons.account_box,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {}),
+                            // list product icon
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }),
           ],
         ),
       ),
