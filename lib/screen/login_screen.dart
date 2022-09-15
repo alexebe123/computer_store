@@ -182,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontFamily: "Nunito",
                           fontSize: 11.sp,
                           fontWeight: FontWeight.bold,
-                          color: Color(0XFFD87234)),
+                          color:const Color(0XFFD87234)),
                     ),
                   ),
                 ],

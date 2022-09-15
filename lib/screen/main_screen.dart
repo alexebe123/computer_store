@@ -46,78 +46,92 @@ class _MainScreenState extends State<MainScreen> {
               width: 2.w,
             ),
           ]),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 1.h,
+      body: Stack(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 1.h,
+              ),
+              const ProductItemWidget(),
+              SizedBox(
+                height: 30.h,
+                child: PageView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _pageController,
+                  onPageChanged: (index) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                  children: const [
+                    // main screen
+                  ],
                 ),
-                const ProductItemWidget(),
-                SizedBox(
-                  height: 73.h,
-                  child: PageView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    controller: _pageController,
-                    onPageChanged: (index) {
-                      setState(() {
-                        currentIndex = index;
-                      });
-                    },
-                    children: const [
-                      // main screen
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Builder(builder: (context) {
-              return Positioned(
-                bottom: 0,
-                left: 0,
-                child: SizedBox(
-                  width: 100.w,
-                  height: 80,
-                  child: Stack(
-                    children: [
-                      CustomPaint(
-                        size: Size(100.w, 80),
-                      ),
-                      SizedBox(
-                        width: 100.w,
-                        height: 80,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            // home icon
-                            IconButton(
-                              icon: Icon(
-                                Icons.favorite,
+              ),
+            ],
+          ),
+          Builder(builder: (context) {
+            return Positioned(
+              bottom: 0,
+              left: 0,
+              child: SizedBox(
+                width: 100.w,
+                height: 80,
+                child: Stack(
+                  children: [
+                    CustomPaint(
+                      size: Size(100.w, 80),
+                    ),
+                    SizedBox(
+                      width: 100.w,
+                      height: 80,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          // home icon
+                          IconButton(
+                            icon: const Icon(
+                              Icons.favorite,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {},
+                            splashColor: Colors.white,
+                          ),
+                          // orders icon
+                          IconButton(
+                              icon: const Icon(
+                                Icons.account_box,
                                 color: Colors.black,
                               ),
-                              onPressed: () {},
-                              splashColor: Colors.white,
+                              onPressed: () {}),
+                          // list product icon
+                          IconButton(
+                            icon: const Icon(
+                              Icons.card_travel_outlined,
+                              color: Colors.black,
                             ),
-                            // orders icon
-                            IconButton(
-                                icon: Icon(
-                                  Icons.account_box,
-                                  color: Colors.black,
-                                ),
-                                onPressed: () {}),
-                            // list product icon
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                            onPressed: () {},
+                            splashColor: Colors.white,
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.settings,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {},
+                            splashColor: Colors.white,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-              );
-            }),
-          ],
-        ),
+              ),
+            );
+          }),
+        ],
       ),
     );
   }
