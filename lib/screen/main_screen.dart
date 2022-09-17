@@ -1,4 +1,5 @@
 import 'package:computer_store/Notifiers/api_services.dart';
+import 'package:computer_store/screen/add_product_screen.dart';
 import 'package:computer_store/screen/first_screen.dart';
 import 'package:computer_store/widget/main/section/product/product_item_widget.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
           backgroundColor: const Color(0XFF242424),
           elevation: 0,
+          automaticallyImplyLeading: false,
           actions: [
             Center(
               child: Text(
@@ -120,7 +122,10 @@ class _MainScreenState extends State<MainScreen> {
                               Icons.settings,
                               color: Colors.black,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, AddProductScreen.routeName);
+                            },
                             splashColor: Colors.white,
                           ),
                         ],

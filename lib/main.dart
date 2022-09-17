@@ -1,5 +1,6 @@
 import 'package:computer_store/Notifiers/providers.dart';
 import 'package:computer_store/screen/add_account_screen.dart';
+import 'package:computer_store/screen/add_product_screen.dart';
 import 'package:computer_store/screen/first_screen.dart';
 import 'package:computer_store/screen/login_screen.dart';
 import 'package:computer_store/screen/main_screen.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
               SingUpScreen.routeName: (context) => const SingUpScreen(),
               AddAccount.routeName: (context) => const AddAccount(),
               MainScreen.routeName: (context) => const MainScreen(),
+              AddProductScreen.routeName: (context) => const AddProductScreen(),
             },
           );
         },

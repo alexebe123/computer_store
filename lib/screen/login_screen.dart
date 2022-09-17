@@ -174,7 +174,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, SingUpScreen.routeName);
+                      Navigator.pushReplacementNamed(
+                          context, SingUpScreen.routeName);
                     },
                     child: Text(
                       "sign up",
@@ -182,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontFamily: "Nunito",
                           fontSize: 11.sp,
                           fontWeight: FontWeight.bold,
-                          color:const Color(0XFFD87234)),
+                          color: const Color(0XFFD87234)),
                     ),
                   ),
                 ],
@@ -229,8 +230,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         await Provider.of<LoginState>(context, listen: false)
                             .load();
                     if (res != null) {
-                      Navigator.of(context)
-                          .pushReplacementNamed(MainScreen.routeName);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const MainScreen()));
                     }
                   },
                   child: Image.asset('assets/images/google.png')),

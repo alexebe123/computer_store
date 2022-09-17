@@ -279,7 +279,8 @@ class _SingUpScreenState extends State<SingUpScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, LoginScreen.routeName);
+                      Navigator.pushReplacementNamed(
+                          context, LoginScreen.routeName);
                     },
                     child: Text(
                       "Login",
